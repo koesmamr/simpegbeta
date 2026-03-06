@@ -810,7 +810,12 @@
                     localStorage.setItem('simpeg_user', JSON.stringify(STATE.user));
                     showApp();
                 }
-            } catch (err) { showLoader(false); Swal.fire('Error', err.message, 'error'); }
+            } catch (err) { 
+                showLoader(false); 
+                if (err.message !== "Maintenance Mode Intercepted") {
+                    Swal.fire('Error', err.message, 'error'); 
+                }
+            }
         }
 
         async function promptLinkNIK(email, role, token) {
@@ -855,7 +860,9 @@
                     }
                 } catch (err) { 
                     showLoader(false); 
-                    Swal.fire('Gagal Menautkan', err.message, 'error'); 
+                    if (err.message !== "Maintenance Mode Intercepted") {
+                        Swal.fire('Gagal Menautkan', err.message, 'error'); 
+                    }
                 }
             }
         }
@@ -905,7 +912,9 @@
                     });
                 } catch (err) { 
                     showLoader(false); 
-                    Swal.fire('Gagal Registrasi', err.message, 'error'); 
+                    if (err.message !== "Maintenance Mode Intercepted") {
+                        Swal.fire('Gagal Registrasi', err.message, 'error'); 
+                    }
                 }
             }
         }
@@ -965,7 +974,9 @@
                 Toast.fire({icon: 'success', title: res.message});
             } catch(e) {
                 cb.checked = !isON;
-                Swal.fire('Gagal', e.message, 'error');
+                if (e.message !== "Maintenance Mode Intercepted") {
+                    Swal.fire('Gagal', e.message, 'error');
+                }
             }
             showLoader(false);
         }
@@ -1306,7 +1317,11 @@
                     const namaA = (a.Nama_Lengkap || '').toUpperCase(); const namaB = (b.Nama_Lengkap || '').toUpperCase(); return namaA.localeCompare(namaB);
                 });
                 STATE.filteredPegawai = [...STATE.allPegawai]; STATE.currentPage = 1; renderTablePegawai();
-            } catch(e) { Swal.fire('Error', e.message, 'error'); }
+            } catch(e) { 
+                if (e.message !== "Maintenance Mode Intercepted") {
+                    Swal.fire('Error', e.message, 'error'); 
+                }
+            }
         }
 
         function renderTablePegawai() {
@@ -1461,7 +1476,11 @@
                         try {
                             await apiCall({ action: 'submitUpdate', executorRole: STATE.user.role, nik_target: nik, sheet_target: targetSheet, kolom_target: targetKolom, nilai_baru: newAgama });
                             await refreshCurrentPage(); 
-                        } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+                        } catch(e) { 
+                            if (e.message !== "Maintenance Mode Intercepted") {
+                                Swal.fire('Gagal', e.message, 'error'); 
+                            }
+                        }
                     }
                     return;
                 }
@@ -1505,7 +1524,11 @@
                     try {
                         await apiCall({ action: 'submitUpdate', executorRole: STATE.user.role, nik_target: nik, sheet_target: targetSheet, kolom_target: targetKolom, nilai_baru: newVal });
                         await refreshCurrentPage();
-                    } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+                    } catch(e) { 
+                        if (e.message !== "Maintenance Mode Intercepted") {
+                            Swal.fire('Gagal', e.message, 'error'); 
+                        }
+                    }
                 }
             }
         }
@@ -1628,7 +1651,9 @@
 
             } catch (e) {
                 showLoader(false);
-                Swal.fire('Error', e.message, 'error');
+                if (e.message !== "Maintenance Mode Intercepted") {
+                    Swal.fire('Error', e.message, 'error');
+                }
             }
         }
 
@@ -1721,7 +1746,11 @@
             try {
                 await apiCall({ action: 'processBulkAntrian', ids: ids, action_type: action_type, alasan_tolak: alasan_tolak });
                 await refreshCurrentPage();
-            } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+            } catch(e) { 
+                if (e.message !== "Maintenance Mode Intercepted") {
+                    Swal.fire('Gagal', e.message, 'error'); 
+                }
+            }
         }
 
         async function prosesAntrian(id_antrian, action_type) {
@@ -1753,7 +1782,11 @@
             try {
                 await apiCall({ action: 'processAntrian', id_antrian: id_antrian, action_type: action_type, alasan_tolak: alasan_tolak });
                 await refreshCurrentPage(); 
-            } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+            } catch(e) { 
+                if (e.message !== "Maintenance Mode Intercepted") {
+                    Swal.fire('Gagal', e.message, 'error'); 
+                }
+            }
         }
 
         // ==========================================
@@ -1893,7 +1926,11 @@
                     try {
                         await apiCall({ action: 'submitUpdate', executorRole: STATE.user.role, nik_target: STATE.user.nik, sheet_target: sheet, kolom_target: kolom, nilai_baru: newAgama });
                         await refreshCurrentPage(true); 
-                    } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+                    } catch(e) { 
+                        if (e.message !== "Maintenance Mode Intercepted") {
+                            Swal.fire('Gagal', e.message, 'error'); 
+                        }
+                    }
                 }
                 return;
             }
@@ -1969,7 +2006,11 @@
                     try {
                         await apiCall({ action: 'submitUpdate', executorRole: STATE.user.role, nik_target: STATE.user.nik, sheet_target: sheet, kolom_target: kolom, nilai_baru: newAlamat });
                         await refreshCurrentPage(true); 
-                    } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+                    } catch(e) { 
+                        if (e.message !== "Maintenance Mode Intercepted") {
+                            Swal.fire('Gagal', e.message, 'error'); 
+                        }
+                    }
                 }
                 return; 
             }
@@ -2090,7 +2131,11 @@
                     try {
                         await apiCall({ action: 'submitUpdate', executorRole: STATE.user.role, nik_target: STATE.user.nik, sheet_target: sheet, kolom_target: kolom, nilai_baru: newUnit });
                         await refreshCurrentPage(true); 
-                    } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+                    } catch(e) { 
+                        if (e.message !== "Maintenance Mode Intercepted") {
+                            Swal.fire('Gagal', e.message, 'error'); 
+                        }
+                    }
                 }
                 return;
             }
@@ -2126,7 +2171,11 @@
                 try {
                     await apiCall({ action: 'submitUpdate', executorRole: STATE.user.role, nik_target: STATE.user.nik, sheet_target: sheet, kolom_target: kolom, nilai_baru: finalVal });
                     await refreshCurrentPage(); 
-                } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+                } catch(e) { 
+                    if (e.message !== "Maintenance Mode Intercepted") {
+                        Swal.fire('Gagal', e.message, 'error'); 
+                    }
+                }
             }
         }
 
@@ -2209,7 +2258,11 @@
                         try {
                             await apiCall({ action: 'submitUpdate', executorRole: STATE.user.role, nik_target: STATE.user.nik, sheet_target: sheet, baris_target: idData, kolom_target: selectedKolom, nilai_baru: newAgama });
                             await refreshCurrentPage(); 
-                        } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+                        } catch(e) { 
+                            if (e.message !== "Maintenance Mode Intercepted") {
+                                Swal.fire('Gagal', e.message, 'error'); 
+                            }
+                        }
                     }
                     return;
                 }
@@ -2285,7 +2338,11 @@
                     try {
                         await apiCall({ action: 'submitUpdate', executorRole: STATE.user.role, nik_target: STATE.user.nik, sheet_target: sheet, baris_target: idData, kolom_target: selectedKolom, nilai_baru: newVal });
                         await refreshCurrentPage(); 
-                    } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+                    } catch(e) { 
+                        if (e.message !== "Maintenance Mode Intercepted") {
+                            Swal.fire('Gagal', e.message, 'error'); 
+                        }
+                    }
                 }
             }
         }
@@ -2666,7 +2723,11 @@
                             sheet_target: sheet, kolom_target: 'Pengajuan Data Baru', nilai_baru: nilaiKeluarga
                         });
                         await refreshCurrentPage(); 
-                    } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+                    } catch(e) { 
+                        if (e.message !== "Maintenance Mode Intercepted") {
+                            Swal.fire('Gagal', e.message, 'error'); 
+                        }
+                    }
                 } else if (formValues.length > 0) {
                     const nilaiGabungan = formValues.join(' | ');
                     try {
@@ -2675,7 +2736,11 @@
                             sheet_target: sheet, kolom_target: 'Pengajuan Data Baru', nilai_baru: nilaiGabungan
                         });
                         await refreshCurrentPage(); 
-                    } catch(e) { Swal.fire('Gagal', e.message, 'error'); }
+                    } catch(e) { 
+                        if (e.message !== "Maintenance Mode Intercepted") {
+                            Swal.fire('Gagal', e.message, 'error'); 
+                        }
+                    }
                 }
             }
         }
@@ -2721,7 +2786,11 @@
                         });
                         
                         await refreshCurrentPage(); 
-                    } catch(err) { Swal.fire('Error', err.message, 'error'); }
+                    } catch(err) { 
+                        if (err.message !== "Maintenance Mode Intercepted") {
+                            Swal.fire('Error', err.message, 'error'); 
+                        }
+                    }
                     showLoader(false);
                 };
                 img.src = e.target.result;
@@ -2995,7 +3064,9 @@
                 generateAndDownloadCV(resMain.data, riwayatData, identitas);
             } catch (e) {
                 showLoader(false);
-                Swal.fire('Error', e.message, 'error');
+                if (e.message !== "Maintenance Mode Intercepted") {
+                    Swal.fire('Error', e.message, 'error');
+                }
             }
         }
 
